@@ -10,9 +10,11 @@
 		5CF798162A112D4A006A2267 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798152A112D4A006A2267 /* AppDelegate.swift */; };
 		5CF798182A112D4A006A2267 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798172A112D4A006A2267 /* SceneDelegate.swift */; };
 		5CF7981A2A112D4A006A2267 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798192A112D4A006A2267 /* ViewController.swift */; };
-		5CF7981D2A112D4A006A2267 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF7981B2A112D4A006A2267 /* Main.storyboard */; };
 		5CF7981F2A112D4C006A2267 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CF7981E2A112D4C006A2267 /* Assets.xcassets */; };
 		5CF798222A112D4C006A2267 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CF798202A112D4C006A2267 /* LaunchScreen.storyboard */; };
+		5CF7982A2A115CA0006A2267 /* LaunchScreenController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798292A115CA0006A2267 /* LaunchScreenController.swift */; };
+		5CF7982C2A116FC9006A2267 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF7982B2A116FC9006A2267 /* SignInController.swift */; };
+		5CF7982E2A117142006A2267 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF7982D2A117142006A2267 /* RegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +22,12 @@
 		5CF798152A112D4A006A2267 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CF798172A112D4A006A2267 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5CF798192A112D4A006A2267 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		5CF7981C2A112D4A006A2267 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5CF7981E2A112D4C006A2267 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CF798212A112D4C006A2267 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CF798232A112D4C006A2267 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CF798292A115CA0006A2267 /* LaunchScreenController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenController.swift; sourceTree = "<group>"; };
+		5CF7982B2A116FC9006A2267 /* SignInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
+		5CF7982D2A117142006A2267 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +63,9 @@
 				5CF798152A112D4A006A2267 /* AppDelegate.swift */,
 				5CF798172A112D4A006A2267 /* SceneDelegate.swift */,
 				5CF798192A112D4A006A2267 /* ViewController.swift */,
-				5CF7981B2A112D4A006A2267 /* Main.storyboard */,
+				5CF7982D2A117142006A2267 /* RegisterViewController.swift */,
+				5CF798292A115CA0006A2267 /* LaunchScreenController.swift */,
+				5CF7982B2A116FC9006A2267 /* SignInController.swift */,
 				5CF7981E2A112D4C006A2267 /* Assets.xcassets */,
 				5CF798202A112D4C006A2267 /* LaunchScreen.storyboard */,
 				5CF798232A112D4C006A2267 /* Info.plist */,
@@ -127,7 +133,6 @@
 			files = (
 				5CF798222A112D4C006A2267 /* LaunchScreen.storyboard in Resources */,
 				5CF7981F2A112D4C006A2267 /* Assets.xcassets in Resources */,
-				5CF7981D2A112D4A006A2267 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +145,9 @@
 			files = (
 				5CF7981A2A112D4A006A2267 /* ViewController.swift in Sources */,
 				5CF798162A112D4A006A2267 /* AppDelegate.swift in Sources */,
+				5CF7982A2A115CA0006A2267 /* LaunchScreenController.swift in Sources */,
+				5CF7982E2A117142006A2267 /* RegisterViewController.swift in Sources */,
+				5CF7982C2A116FC9006A2267 /* SignInController.swift in Sources */,
 				5CF798182A112D4A006A2267 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,14 +155,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		5CF7981B2A112D4A006A2267 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5CF7981C2A112D4A006A2267 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5CF798202A112D4C006A2267 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
