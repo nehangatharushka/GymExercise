@@ -11,32 +11,37 @@ class RegisterViewController : UIViewController {
     
     // MARK: - Properties
     
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Name"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        return label
-    }()
+//    private let nameLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Name"
+//        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     private let nameTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.placeholder = "Enter your name"
+        textField.placeholder = "Enter your username"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.widthAnchor = 100
         return textField
     }()
     
-    private let emailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Email"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        return label
-    }()
+//    private let emailLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Email"
+//        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your email"
         textField.keyboardType = .emailAddress
+        textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
@@ -44,6 +49,7 @@ class RegisterViewController : UIViewController {
         let label = UILabel()
         label.text = "Password"
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -52,6 +58,7 @@ class RegisterViewController : UIViewController {
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your password"
         textField.isSecureTextEntry = true
+        textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
@@ -62,6 +69,7 @@ class RegisterViewController : UIViewController {
         button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -77,27 +85,48 @@ class RegisterViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         
-        view.backgroundColor = .white
+        view.backgroundColor = .darkGray
+        // add UI elements to view
+//        view.addSubview(nameLabel)
+        view.addSubview(nameTextField)
+//        view.addSubview(emailLabel)
+        view.addSubview(emailTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(registerButton)
+        view.addSubview(signIn)
         
-        setupUI()
-    }
-    
-    // MARK: - Private Methods
-    
-    private func setupUI() {
-        let stackView = UIStackView(arrangedSubviews: [nameLabel, nameTextField, emailLabel, emailTextField, passwordLabel, passwordTextField, registerButton , signIn])
-        stackView.axis = .vertical
-        stackView.spacing = 16
-        stackView.distribution = .fillEqually
-        
-        view.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        
+        // set constraints
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+            
+//            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+//            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            nameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nameTextField.widthAnchor.constraint(equalToConstant: 350),
+            nameTextField.heightAnchor.constraint(equalToConstant: 40),
+//            emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
+//            emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 20),
+            emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emailTextField.heightAnchor.constraint(equalToConstant: 40),
+            emailTextField.widthAnchor.constraint(equalToConstant: 350),
+            
+            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor,constant: 20),
+            passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 40),
+            passwordTextField.widthAnchor.constraint(equalToConstant: 350),
+            
+            registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            registerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            registerButton.widthAnchor.constraint(equalToConstant: 100),
+            registerButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            signIn.topAnchor.constraint(equalTo: registerButton.bottomAnchor,constant: 10),
+            signIn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
     }
     
