@@ -28,6 +28,14 @@ class RegisterViewController : UIViewController {
         return textField
     }()
     
+    private let fullNameTextField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.placeholder = "Enter your FullName"
+        textField.translatesAutoresizingMaskIntoConstraints = false
+//        textField.widthAnchor = 100
+        return textField
+    }()
 //    private let emailLabel: UILabel = {
 //        let label = UILabel()
 //        label.text = "Email"
@@ -91,7 +99,7 @@ class RegisterViewController : UIViewController {
         // add UI elements to view
 //        view.addSubview(nameLabel)
         view.addSubview(nameTextField)
-//        view.addSubview(emailLabel)
+       view.addSubview(fullNameTextField)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
         view.addSubview(registerButton)
@@ -109,8 +117,13 @@ class RegisterViewController : UIViewController {
             nameTextField.heightAnchor.constraint(equalToConstant: 40),
 //            emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
 //            emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+   
+            fullNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 20),
+            fullNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            fullNameTextField.heightAnchor.constraint(equalToConstant: 40),
+            fullNameTextField.widthAnchor.constraint(equalToConstant: 350),
             
-            emailTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 20),
+            emailTextField.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor,constant: 20),
             emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 40),
             emailTextField.widthAnchor.constraint(equalToConstant: 350),
@@ -132,19 +145,67 @@ class RegisterViewController : UIViewController {
     
     @objc private func registerButtonTapped() {
         guard let name = nameTextField.text, !name.isEmpty,
+              let fullName = fullNameTextField.text, !fullName.isEmpty,
               let email = emailTextField.text, !email.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
             return
         }
         
         // Send registration data to API endpoint
-        // TODO: Implement API call here
+        // Define the endpoint URL
+        let endpoint = URL(string: "http://localhost:8080/user/Register")!
+
+        // Define the request parameters
+        let parameters: [String: Any] = [
+            "fullName":fullName,
+            "userName": name,
+            "email":email,
+            "password": password
+        ]
+        print(parameters)
+        // Create the request object
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Convert the parameters to JSON data and set it as the request body
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+        } catch {
+            print("Error serializing JSON: \(error)")
+        }
+
+        // Create the URLSession object
+        let session = URLSession.shared
+
+        // Send the request
+        let task = session.dataTask(with: request) { data, response, error in
+            // Handle the response
+            if let error = error {
+                print("Error: \(error)")
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    print("Request succeeded")
+                    DispatchQueue.main.async {
+                        let nextVC = SignInController()
+                        self.navigationController?.pushViewController(nextVC, animated: true)
+                    }
+                } else {
+                    print("Request failed with status code \(response.statusCode)")
+                }
+            }
+        }
+
+        task.resume()
+
         
         // Show success message
-        let alert = UIAlertController(title: "Registration Successful", message: "You have successfully registered!", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        alert.addAction(okAction)
-        present(alert, animated: true)
+//        let alert = UIAlertController(title: "Registration Successful", message: "You have successfully registered!", preferredStyle: .alert)
+//        let okAction = UIAlertAction(title: "OK", style: .default)
+//        alert.addAction(okAction)
+//        present(alert, animated: true)
+        
+        
     }
     
     @objc func signInTap() {

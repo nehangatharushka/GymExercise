@@ -9,14 +9,14 @@ import UIKit
 
 class SignInController : UIViewController {
     // create UI elements
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Name:"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+//    private let nameLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Name:"
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
-    private let nameTextField: UITextField = {
+    private let userNameTxtField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your name"
@@ -24,14 +24,14 @@ class SignInController : UIViewController {
         return textField
     }()
     
-    private let emailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Email:"
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+//    private let emailLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Email:"
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
-    private let emailTextField: UITextField = {
+    private let passwordTxtField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your email"
@@ -45,6 +45,7 @@ class SignInController : UIViewController {
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -61,30 +62,25 @@ class SignInController : UIViewController {
         navigationItem.hidesBackButton = true
         
         // add UI elements to view
-        view.addSubview(nameLabel)
-        view.addSubview(nameTextField)
-        view.addSubview(emailLabel)
-        view.addSubview(emailTextField)
+        view.addSubview(userNameTxtField)
+        view.addSubview(passwordTxtField)
         view.addSubview(submitButton)
         view.addSubview(signIn)
         
         // set constraints
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
-            nameTextField.topAnchor.constraint(equalTo: nameLabel.topAnchor),
-            nameTextField.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: 10),
-            nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            userNameTxtField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            userNameTxtField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            userNameTxtField.widthAnchor.constraint(equalToConstant: 350),
+            userNameTxtField.heightAnchor.constraint(equalToConstant: 40),
             
-            emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
-            emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            passwordTxtField.topAnchor.constraint(equalTo: userNameTxtField.bottomAnchor, constant: 20),
+            passwordTxtField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            passwordTxtField.widthAnchor.constraint(equalToConstant: 350),
+            passwordTxtField.heightAnchor.constraint(equalToConstant: 40),
             
-            emailTextField.topAnchor.constraint(equalTo: emailLabel.topAnchor),
-            emailTextField.leadingAnchor.constraint(equalTo: emailLabel.trailingAnchor, constant: 10),
-            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            
-            submitButton.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 20),
+            submitButton.topAnchor.constraint(equalTo: passwordTxtField.bottomAnchor, constant: 20),
             submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             submitButton.widthAnchor.constraint(equalToConstant: 100),
             submitButton.heightAnchor.constraint(equalToConstant: 50),
@@ -102,27 +98,55 @@ class SignInController : UIViewController {
             navigationController?.pushViewController(detailViewController, animated: true)
         }
     
-//    @objc func submitButtonTapped() {
-//        guard let name = nameTextField.text,
-//              let email = emailTextField.text else {
-//            return
-//        }
-//
-//        let parameters: [String: Any] = [
-//            "name": name,
-//            "email": email
-//        ]
-//
-//        AF.request("https://your-api-url.com", method: .post, parameters: parameters)
-//            .validate(statusCode: 200..<300)
-//            .response { response in
-//                switch response.result {
-//                case .success:
-//                    print("Data sent successfully")
-//                case .failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//            }
-//    }
+    @objc func submitButtonTapped() {
+        guard let name = userNameTxtField.text,
+              let pw = passwordTxtField.text else {
+            return
+        }
+
+//        let endpoint = URL(string: "http://localhost:8080/user/loginUser)!
+        let endpoint = URL(string: "http://localhost:8080/user/loginUser")!
+        
+        let parameters: [String: Any] = [
+            "userName": name,
+            "password": pw
+        ]
+        print(parameters)
+        // Create the request object
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Convert the parameters to JSON data and set it as the request body
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+        } catch {
+            print("Error serializing JSON: \(error)")
+        }
+
+        // Create the URLSession object
+        let session = URLSession.shared
+
+        // Send the request
+        let task = session.dataTask(with: request) { data, response, error in
+            // Handle the response
+            if let error = error {
+                print("Error: \(error)")
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    print("Request succeeded login")
+                    DispatchQueue.main.async {
+                    let nextVC = HomeViewController()
+                    self.navigationController?.pushViewController(nextVC, animated: true)
+                }
+                } else {
+                    print("Request failed with status code \(response.statusCode)")
+                }
+            }
+        }
+
+        task.resume()
+
+    }
 }
 

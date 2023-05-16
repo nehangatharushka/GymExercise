@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5CD7F5A92A131FDB003F01B5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD7F5A82A131FDB003F01B5 /* HomeViewController.swift */; };
 		5CF798162A112D4A006A2267 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798152A112D4A006A2267 /* AppDelegate.swift */; };
 		5CF798182A112D4A006A2267 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798172A112D4A006A2267 /* SceneDelegate.swift */; };
 		5CF7981A2A112D4A006A2267 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF798192A112D4A006A2267 /* ViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5CD7F5A82A131FDB003F01B5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5CF798122A112D4A006A2267 /* GymExercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymExercise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF798152A112D4A006A2267 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CF798172A112D4A006A2267 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				5CF7982D2A117142006A2267 /* RegisterViewController.swift */,
 				5CF798292A115CA0006A2267 /* LaunchScreenController.swift */,
 				5CF7982B2A116FC9006A2267 /* SignInController.swift */,
+				5CD7F5A82A131FDB003F01B5 /* HomeViewController.swift */,
 				5CF7981E2A112D4C006A2267 /* Assets.xcassets */,
 				5CF798202A112D4C006A2267 /* LaunchScreen.storyboard */,
 				5CF798232A112D4C006A2267 /* Info.plist */,
@@ -148,6 +151,7 @@
 				5CF7982A2A115CA0006A2267 /* LaunchScreenController.swift in Sources */,
 				5CF7982E2A117142006A2267 /* RegisterViewController.swift in Sources */,
 				5CF7982C2A116FC9006A2267 /* SignInController.swift in Sources */,
+				5CD7F5A92A131FDB003F01B5 /* HomeViewController.swift in Sources */,
 				5CF798182A112D4A006A2267 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
