@@ -21,6 +21,10 @@ class HomeTabBarController: UITabBarController {
     }
         
     override func viewDidLoad() {
+        
+        
+        navigationItem.hidesBackButton = true
+        
         super.viewDidLoad()
         print("Passed userData: \(userData)")
         let homeVC = HomeViewController()

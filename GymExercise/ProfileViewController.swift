@@ -84,7 +84,7 @@ class ProfileViewController : UIViewController {
     
     private let profileViewButton: UIButton = {
            let button = UIButton()
-           button.setTitle("Calculate BMI", for: .normal)
+           button.setTitle("View", for: .normal)
            button.backgroundColor = .systemBlue
            button.layer.cornerRadius = 5
            button.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +115,7 @@ class ProfileViewController : UIViewController {
             
         print("Passed Profile userData: \(userData)")
         
-        navigationItem.hidesBackButton = false
+        navigationItem.hidesBackButton = true
                 
         view.backgroundColor = .darkGray
         
@@ -130,22 +130,25 @@ class ProfileViewController : UIViewController {
         // set constraints
         NSLayoutConstraint.activate([
             
-            userNamelbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            profileViewButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
+            calculateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            profileViewButton.widthAnchor.constraint(equalToConstant: 360),
+            profileViewButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            calculateButton.topAnchor.constraint(equalTo: profileViewButton.bottomAnchor, constant: 15),
+            calculateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            calculateButton.widthAnchor.constraint(equalToConstant: 360),
+            calculateButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            userNamelbl.topAnchor.constraint(equalTo: calculateButton.bottomAnchor, constant: 50),
             userNamelbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-         
-            profileViewButton.topAnchor.constraint(equalTo: userNamelbl.topAnchor, constant: 50),
-            profileViewButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             emaillbl.topAnchor.constraint(equalTo: userNamelbl.bottomAnchor, constant: 50),
             emaillbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             fullNamelbl.topAnchor.constraint(equalTo: emaillbl.bottomAnchor, constant: 50),
             fullNamelbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            
-            calculateButton.topAnchor.constraint(equalTo: fullNamelbl.bottomAnchor, constant: 30),
-            calculateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            calculateButton.widthAnchor.constraint(equalToConstant: 150),
-            calculateButton.heightAnchor.constraint(equalToConstant: 40),
+         
 //
 //            heightTextField.topAnchor.constraint(equalTo: heightlbl.topAnchor),
 //            heightTextField.leadingAnchor.constraint(equalTo: heightlbl.trailingAnchor, constant: 10),
