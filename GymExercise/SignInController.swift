@@ -5,7 +5,6 @@
 //  Created by Ravindu Dananjaya on 2023-05-15.
 //
 import UIKit
-//import Alamofire
 
 class SignInController : UIViewController {
     // create UI elements
@@ -111,7 +110,6 @@ class SignInController : UIViewController {
             "userName": name,
             "password": pw
         ]
-        print(parameters)
         // Create the request object
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
@@ -134,11 +132,15 @@ class SignInController : UIViewController {
                 print("Error: \(error)")
             } else if let data = data, let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
-                    print("Request succeeded login")
-                    DispatchQueue.main.async {
-                    let nextVC = HomeViewController()
-                    self.navigationController?.pushViewController(nextVC, animated: true)
-                }
+                    do {
+                        let userData = try JSONDecoder().decode(UserData.self, from: data)
+                        DispatchQueue.main.async {
+                            let nextVC = HomeTabBarController(userData: userData)
+                            self.navigationController?.pushViewController(nextVC, animated: true)
+                        }
+                    } catch {
+                        print("Error decoding JSON: \(error)")
+                    }
                 } else {
                     print("Request failed with status code \(response.statusCode)")
                 }
