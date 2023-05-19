@@ -111,6 +111,7 @@ class ProfileViewController : UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
             
         print("Passed Profile userData: \(userData)")
@@ -180,13 +181,18 @@ class ProfileViewController : UIViewController {
 //        calculateButton.addTarget(self, action: #selector(calculateButtonTapped), for: .touchUpInside)
     }
     
-    @objc func calculateButtonTapped(_ sender:UIButton) {
-        let detailViewController = CalculateBMIVewController()
-        navigationController?.pushViewController(detailViewController, animated: true)
-    }
+//    @objc func calculateButtonTapped(_ sender:UIButton) {
+//        let detailViewController = CalculateBMIVewController()
+//        navigationController?.pushViewController(detailViewController, animated: true)
+//    }
+    
+    @IBAction func calculateButtonTapped(_ sender: UIButton) {
+           let calculateBMIViewController = CalculateBMIVewController(userData: userData)
+           navigationController?.pushViewController(calculateBMIViewController, animated: true)
+       }
     
     @objc func profileViewBtnTapped(_ sender:UIButton) {
-        let detailViewController = UserDataViewController()
+        let detailViewController = UserDataViewController(userData: userData)
         navigationController?.pushViewController(detailViewController, animated: true)
     }
     
