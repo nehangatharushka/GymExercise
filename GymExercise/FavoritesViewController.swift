@@ -11,6 +11,8 @@ class FavoritesViewController : UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .green
    
     }
     

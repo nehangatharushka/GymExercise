@@ -9,6 +9,7 @@ import UIKit
 
 class HomeTabBarController: UITabBarController {
 
+    //for profile view
     let userData: UserData
 
     init(userData: UserData) {
@@ -19,7 +20,7 @@ class HomeTabBarController: UITabBarController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-        
+    
     override func viewDidLoad() {
         
         
@@ -27,6 +28,7 @@ class HomeTabBarController: UITabBarController {
         
         super.viewDidLoad()
         print("Passed userData: \(userData)")
+        
         let homeVC = HomeViewController()
         let searchVC = SearchViewController()
         let favoritesVC = FavoritesViewController()
