@@ -33,7 +33,7 @@ class SignInController : UIViewController {
     private let passwordTxtField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.placeholder = "Enter your email"
+        textField.placeholder = "Enter your password"
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
