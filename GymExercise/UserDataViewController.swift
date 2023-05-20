@@ -24,7 +24,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your height"
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.keyboardType = .numberPad
+//        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -33,7 +33,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Enter your weight"
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.keyboardType = .numberPad
+//        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -42,7 +42,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Enter your age"
         textField.borderStyle = .roundedRect
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.keyboardType = .numberPad
+//        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -76,7 +76,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your email"
-        textField.keyboardType = .emailAddress
+//        textField.keyboardType = .emailAddress
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -120,6 +120,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(fitnessGoalTextField)
         view.addSubview(updateButton)
         setConstraints()
+        fetchUserData()
     }
     
     func setConstraints() {
@@ -158,11 +159,6 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
             updateButton.widthAnchor.constraint(equalToConstant: 200),
             updateButton.heightAnchor.constraint(equalToConstant: 50),
         ])
-        
-        nameTextField.text = userData.userName
-        fullNameTextField.text = userData.fullName
-        emailTextField.text = userData.email
-        
     }
     
     @objc private func updateTap() {
@@ -177,16 +173,19 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         }
 
 //      let endpoint = URL(string: "http://localhost:8080/user/loginUser)!
-        let endpoint = URL(string: "http://localhost:8080/user/loginUser")!
+        let endpoint = URL(string: "http://localhost:8080/user/update")!
         
         let parameters: [String: Any] = [
+            "_id":userData._id,
             "userName": name,
             "fullName":fullName,
             "email":email,
             "height": height,
             "weight":weight,
-            "age":fitnessGoal
+            "age":age,
+            "fitnessGoal":fitnessGoal
         ]
+        
         // Create the request object
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
@@ -210,13 +209,22 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
             } else if let data = data, let response = response as? HTTPURLResponse {
                 if response.statusCode == 200 {
                     do {
+//                        let userData = try JSONDecoder().decode(UserData.self, from: data)
                         let userData = try JSONDecoder().decode(UserData.self, from: data)
+                      
                         DispatchQueue.main.async {
+                            
+                            let alert = UIAlertController(title: "Success", message: "Profile successfully updated", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                
                             let nextVC = HomeTabBarController(userData: userData)
                             self.navigationController?.pushViewController(nextVC, animated: true)
+                            }))
+                                // Show alert
+                                self.present(alert, animated: true, completion: nil)
                         }
                     } catch {
-                        print("Error decoding JSON: \(error)")
+                        print("Error decoding JSON-update: \(error)")
                     }
                 } else {
                     print("Request failed with status code \(response.statusCode)")
@@ -226,9 +234,77 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
 
         task.resume()
         }
-    
+                                                      
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+    
+    func fetchUserData() {
+        let endpoint = URL(string: "http://localhost:8080/user/getUser")!
+
+        let parameters: [String: Any] = [
+            "_id": userData._id,
+        ]
+        print(parameters)
+        
+        // Create the request object
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        // Convert the parameters to JSON data and set it as the request body
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+        } catch {
+            print("Error serializing JSON: \(error)")
+        }
+        
+        let session = URLSession.shared
+//        let task = session.dataTask(with: endpoint) { (data, response, error) in
+//            print(String(data: data ?? <#default value#>, encoding: .utf8))
+//            if let error = error {
+//                print("Error: \(error)")
+//            } else if let data = data {
+//                DispatchQueue.main.async {
+//                    self.updateTextBoxes(data: data)
+//                }
+//            }
+//        }
+        // Send the request
+        let task = session.dataTask(with: request) { data, response, error in
+            // Handle the response
+            if let error = error {
+                print("Error: \(error)")
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    print("Request succeeded")
+                    DispatchQueue.main.async {
+                        self.updateTextBoxes(data: data)
+                   }
+                } else {
+                    print("Request failed with status code \(response.statusCode)")
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func updateTextBoxes(data: Data) {
+        do {
+            let userData = try JSONDecoder().decode(UserData.self, from: data)
+            nameTextField.text = userData.userName
+            fullNameTextField.text = userData.fullName
+            emailTextField.text = userData.email
+            heightTextField.text = (userData.height)
+            weightTextField.text = (userData.weight)
+            ageTextField.text = (userData.age)
+            fitnessGoalTextField.text = userData.fitnessGoal
+        } catch {
+            print("Error decoding JSON: \(error)")
+        }
+    }
+
+
+
 }
