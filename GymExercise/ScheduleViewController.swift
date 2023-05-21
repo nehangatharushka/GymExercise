@@ -14,7 +14,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
     let datePicker = UIDatePicker()
     let tableView = UITableView()
 
-    let userData: UserData
+    var userData: UserData
     
     init(userData: UserData) {
         self.userData = userData
@@ -129,7 +129,6 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
         // save the selected days and time to your database here
         print(days)
         print(time)
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm" // ISO 8601 format
         let timeString = dateFormatter.string(from: time)
@@ -183,7 +182,7 @@ class ScheduleViewController: UIViewController, UITableViewDelegate, UITableView
                             
                             let alert = UIAlertController(title: "Success", message: "Updated Schedule", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                                
+                            
                             let nextVC = HomeTabBarController(userData: userData)
                             self.navigationController?.pushViewController(nextVC, animated: true)
                             }))

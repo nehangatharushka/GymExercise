@@ -146,11 +146,11 @@ class CalculateBMIVewController : UIViewController {
         var plan = ""
         
         if bmi < 18.5 {
-            plan = "Gain Weight"
+            plan = "Gain-Weight"
         } else if bmi < 24.9 {
-            plan = "Maintain Weight"
+            plan = "Maintain-Weight"
         } else {
-            plan = "Lose Weight"
+            plan = "Lose-Weight"
         }
         
         let alert = UIAlertController(title: "Suggested Fitness Plan", message: "Based on your BMI, you should: \(plan)", preferredStyle: .alert)

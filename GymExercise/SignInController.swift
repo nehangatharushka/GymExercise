@@ -44,6 +44,7 @@ class SignInController : UIViewController {
         textField.borderStyle = .roundedRect
         textField.placeholder = "Enter your password"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isSecureTextEntry = true
         return textField
     }()
     

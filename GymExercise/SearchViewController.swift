@@ -38,7 +38,7 @@ class SearchViewController : UITabBarController, UITableViewDataSource, UITableV
     
     private let timereturn: UILabel = {
         let label = UILabel()
-        label.text = "10.30"
+        label.text = ""
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         return label
@@ -55,7 +55,7 @@ class SearchViewController : UITabBarController, UITableViewDataSource, UITableV
     
      let userData: UserData
      
-     init(userData: UserData) {
+    init(userData: UserData ) {
          self.userData = userData
          super.init(nibName: nil, bundle: nil)
      }
@@ -119,6 +119,7 @@ class SearchViewController : UITabBarController, UITableViewDataSource, UITableV
            
         ])
         fetchData()
+        //timereturn.text = userData.time
         
     }
     
@@ -167,6 +168,62 @@ class SearchViewController : UITabBarController, UITableViewDataSource, UITableV
            
         }
         task.resume()
+        
+        fetchTime()
+        
+    }
+    
+    func fetchTime() {
+
+        let endpoint = URL(string: "http://localhost:8080/user/getUser")!
+        
+        let parameters: [String: Any] = [
+            "_id": userData._id,
+        ]
+        print(parameters)
+        
+        // Create the request object
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Convert the parameters to JSON data and set it as the request body
+        do {
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters)
+        } catch {
+            print("Error serializing JSON: \(error)")
+        }
+        
+        let session = URLSession.shared
+        
+        // Send the request
+        let task = session.dataTask(with: request) { data, response, error in
+            // Handle the response
+            if let error = error {
+                print("Error: \(error)")
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                if response.statusCode == 200 {
+                    print("Request succeeded")
+                    DispatchQueue.main.async {
+                        self.updateTextBoxes(data: data)
+                    }
+                } else {
+                    print("Request failed with status code \(response.statusCode)")
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func updateTextBoxes(data:Data) {
+        do {
+            let userData = try JSONDecoder().decode(UserData.self, from: data)
+            timereturn.text = userData.time
+            print(userData.time)
+
+        } catch {
+            print("Error decoding JSON: \(error)")
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

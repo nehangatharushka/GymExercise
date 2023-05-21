@@ -11,7 +11,7 @@ class HomeTabBarController: UITabBarController {
 
     //for profile view
     let userData: UserData
-
+    
     init(userData: UserData) {
         self.userData = userData
         super.init(nibName: nil, bundle: nil)
@@ -30,7 +30,7 @@ class HomeTabBarController: UITabBarController {
         
         print("Passed userData: \(userData)")
         
-        let homeVC = HomeViewController(userData: userData)
+        let homeVC = HomeViewController(userData: userData )
         let searchVC = SearchViewController(userData: userData)
         let favoritesVC = FavoritesViewController(userData: userData)
         let profileVC = ProfileViewController(userData: userData)

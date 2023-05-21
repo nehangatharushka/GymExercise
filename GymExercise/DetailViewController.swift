@@ -221,7 +221,7 @@ class DetailViewController: UIViewController {
 
     func fetchData() {
         
-        let endpoint = URL(string: "http://localhost:8080/exercise/SelectExercise")!
+        let endpoint = URL(string: "http://localhost:8080/userExercise/OneExercise")!
         
         let parameters: [String: Any] = [
             "name": exerciseName,
