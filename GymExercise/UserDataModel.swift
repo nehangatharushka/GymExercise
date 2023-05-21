@@ -7,6 +7,8 @@
 
 struct UserData: Codable {
     let _id:String
+    let days:String?
+    let time:String?
     let userName: String
     let fullName: String
     let email: String
@@ -27,6 +29,8 @@ struct UserData: Codable {
         case weight
         case age
         case fitnessGoal
+        case days
+        case time
         case __v
     }
 }

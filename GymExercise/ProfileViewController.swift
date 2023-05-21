@@ -15,6 +15,7 @@ class ProfileViewController : UIViewController {
         let label = UILabel()
         label.text = "Weight : "
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
         return label
     }()
     
@@ -22,6 +23,7 @@ class ProfileViewController : UIViewController {
         let label = UILabel()
         label.text = "Weight : "
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
         return label
     }()
     
@@ -29,6 +31,7 @@ class ProfileViewController : UIViewController {
         let label = UILabel()
         label.text = "Weight : "
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .black
         return label
     }()
     
@@ -48,10 +51,12 @@ class ProfileViewController : UIViewController {
         return textField
     }()
     
-    private let heightlbl: UILabel = {
+    private let mylbl: UILabel = {
         let label = UILabel()
-        label.text = "Height:"
+        label.text = "MY INFO"
+        label.textColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         return label
     }()
     
@@ -75,7 +80,7 @@ class ProfileViewController : UIViewController {
     private let calculateButton: UIButton = {
            let button = UIButton()
            button.setTitle("Calculate BMI", for: .normal)
-           button.backgroundColor = .systemBlue
+           button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
            button.layer.cornerRadius = 5
            button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(calculateButtonTapped), for: .touchUpInside)
@@ -84,8 +89,8 @@ class ProfileViewController : UIViewController {
     
     private let profileViewButton: UIButton = {
            let button = UIButton()
-           button.setTitle("View", for: .normal)
-           button.backgroundColor = .systemBlue
+           button.setTitle("My Profile", for: .normal)
+           button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
            button.layer.cornerRadius = 5
            button.translatesAutoresizingMaskIntoConstraints = false
            button.addTarget(self, action: #selector(profileViewBtnTapped), for: .touchUpInside)
@@ -118,7 +123,8 @@ class ProfileViewController : UIViewController {
         
         navigationItem.hidesBackButton = true
                 
-        view.backgroundColor = .darkGray
+        view.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1)
+       
         
         // add UI elements to view
         view.addSubview(userNamelbl)
@@ -126,13 +132,25 @@ class ProfileViewController : UIViewController {
         view.addSubview(fullNamelbl)
         view.addSubview(calculateButton)
         view.addSubview(profileViewButton)
-//        view.addSubview(resultLabel)
+        view.addSubview(mylbl)
         
         // set constraints
         NSLayoutConstraint.activate([
             
-            profileViewButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 2),
-            calculateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            mylbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            mylbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            userNamelbl.topAnchor.constraint(equalTo: mylbl.bottomAnchor, constant: 40),
+            userNamelbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            emaillbl.topAnchor.constraint(equalTo: userNamelbl.bottomAnchor, constant: 20),
+            emaillbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            fullNamelbl.topAnchor.constraint(equalTo: emaillbl.bottomAnchor, constant: 20),
+            fullNamelbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            profileViewButton.topAnchor.constraint(equalTo: fullNamelbl.bottomAnchor, constant: 50),
+            profileViewButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             profileViewButton.widthAnchor.constraint(equalToConstant: 360),
             profileViewButton.heightAnchor.constraint(equalToConstant: 40),
             
@@ -141,14 +159,7 @@ class ProfileViewController : UIViewController {
             calculateButton.widthAnchor.constraint(equalToConstant: 360),
             calculateButton.heightAnchor.constraint(equalToConstant: 40),
             
-            userNamelbl.topAnchor.constraint(equalTo: calculateButton.bottomAnchor, constant: 50),
-            userNamelbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
-            emaillbl.topAnchor.constraint(equalTo: userNamelbl.bottomAnchor, constant: 50),
-            emaillbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            
-            fullNamelbl.topAnchor.constraint(equalTo: emaillbl.bottomAnchor, constant: 50),
-            fullNamelbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
          
 //
 //            heightTextField.topAnchor.constraint(equalTo: heightlbl.topAnchor),

@@ -11,13 +11,23 @@ class RegisterViewController : UIViewController {
     
     // MARK: - Properties
     
-//    private let nameLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "Name"
-//        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Register"
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
+    }()
+    
+    private let userName: UILabel = {
+        let label = UILabel()
+        label.text = "UserName"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
+    }()
     
     private let nameTextField: UITextField = {
         let textField = UITextField()
@@ -26,6 +36,15 @@ class RegisterViewController : UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
 //        textField.widthAnchor = 100
         return textField
+    }()
+    
+    private let fullName: UILabel = {
+        let label = UILabel()
+        label.text = "FullName"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
     }()
     
     private let fullNameTextField: UITextField = {
@@ -44,6 +63,15 @@ class RegisterViewController : UIViewController {
 //        return label
 //    }()
     
+    private let email: UILabel = {
+        let label = UILabel()
+        label.text = "Email"
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
+    }()
+    
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
@@ -53,13 +81,21 @@ class RegisterViewController : UIViewController {
         return textField
     }()
     
-    private let passwordLabel: UILabel = {
+    private let password: UILabel = {
         let label = UILabel()
         label.text = "Password"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
         return label
     }()
+//    private let passwordLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "Password"
+//        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        return label
+//    }()
     
     private let passwordTextField: UITextField = {
         let textField = UITextField()
@@ -73,7 +109,7 @@ class RegisterViewController : UIViewController {
     private let registerButton: UIButton = {
         let button = UIButton()
         button.setTitle("Register", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
         button.layer.cornerRadius = 8
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         button.addTarget(self, action: #selector(registerButtonTapped), for: .touchUpInside)
@@ -92,7 +128,16 @@ class RegisterViewController : UIViewController {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "Image")
+        backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
+
+        // Add the UIImageView as a subview
+        self.view.insertSubview(backgroundImage, at: 0)
+        
         navigationItem.hidesBackButton = true
         
         view.backgroundColor = .darkGray
@@ -104,31 +149,61 @@ class RegisterViewController : UIViewController {
         view.addSubview(passwordTextField)
         view.addSubview(registerButton)
         view.addSubview(signIn)
+        view.addSubview(nameLabel)
+        view.addSubview(userName)
+        view.addSubview(fullName)
+        view.addSubview(email)
+        view.addSubview(password)
         
         // set constraints
         NSLayoutConstraint.activate([
             
 //            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
 //            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nameLabel.widthAnchor.constraint(equalToConstant: 350),
+            nameLabel.heightAnchor.constraint(equalToConstant: 40),
             
-            nameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            userName.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 40),
+            userName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            userName.widthAnchor.constraint(equalToConstant: 350),
+            userName.heightAnchor.constraint(equalToConstant: 40),
+            
+            nameTextField.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 2),
             nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameTextField.widthAnchor.constraint(equalToConstant: 350),
             nameTextField.heightAnchor.constraint(equalToConstant: 40),
 //            emailLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 20),
 //            emailLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            fullName.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 30),
+            fullName.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            fullName.widthAnchor.constraint(equalToConstant: 350),
+            fullName.heightAnchor.constraint(equalToConstant: 40),
+            
    
-            fullNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor,constant: 20),
+            fullNameTextField.topAnchor.constraint(equalTo: fullName.bottomAnchor,constant: 2),
             fullNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             fullNameTextField.heightAnchor.constraint(equalToConstant: 40),
             fullNameTextField.widthAnchor.constraint(equalToConstant: 350),
             
-            emailTextField.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor,constant: 20),
+            email.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor, constant: 30),
+            email.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            email.widthAnchor.constraint(equalToConstant: 350),
+            email.heightAnchor.constraint(equalToConstant: 40),
+            
+            emailTextField.topAnchor.constraint(equalTo: email.bottomAnchor,constant: 2),
             emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emailTextField.heightAnchor.constraint(equalToConstant: 40),
             emailTextField.widthAnchor.constraint(equalToConstant: 350),
             
-            passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor,constant: 20),
+            password.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 30),
+            password.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            password.widthAnchor.constraint(equalToConstant: 350),
+            password.heightAnchor.constraint(equalToConstant: 40),
+            
+            passwordTextField.topAnchor.constraint(equalTo: password.bottomAnchor,constant: 2),
             passwordTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             passwordTextField.heightAnchor.constraint(equalToConstant: 40),
             passwordTextField.widthAnchor.constraint(equalToConstant: 350),

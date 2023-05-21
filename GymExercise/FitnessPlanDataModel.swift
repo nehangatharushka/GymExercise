@@ -7,15 +7,15 @@
 
 struct FitnessPlan: Decodable {
     let type: String
-    let des: String
-    let nutrition: String
-    let exercise: String
+    let Protein: String
+    let Carbohydrates: String
+    let Fat: String
     
     enum CodingKeys: String, CodingKey {
         case type
-        case des
-        case nutrition
-        case exercise
+        case Protein
+        case Carbohydrates
+        case Fat
 
     }
 }

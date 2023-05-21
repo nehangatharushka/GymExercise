@@ -14,7 +14,8 @@ class LanunchScreenController : UIViewController {
         label.text = "Your Peronal Free"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .monospacedSystemFont(ofSize: 24, weight: .bold)
-        label.textColor = .black
+        label.textColor = .white
+        label.backgroundColor = .black
         return label
     }()
     
@@ -24,21 +25,26 @@ class LanunchScreenController : UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .monospacedSystemFont(ofSize: 24, weight: .bold)
         label.textColor = .black
+        label.backgroundColor = .black
+        label.textColor = .white
         return label
     }()
     
     private let signIn: UIButton = {
         let button = UIButton()
         button.setTitle("Already Have an Account , SignIn", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(signInTap), for: .touchUpInside)
+        button.backgroundColor = .black
         return button
     }()
     
     private let nextButton: UIButton = {
         let button = UIButton()
         button.setTitle("Next", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
@@ -47,6 +53,14 @@ class LanunchScreenController : UIViewController {
     
     
     override func viewDidLoad() {
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "Image")
+        backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
+
+        // Add the UIImageView as a subview
+        self.view.insertSubview(backgroundImage, at: 0)
+        
         super.viewDidLoad()
         setupUI()
     }

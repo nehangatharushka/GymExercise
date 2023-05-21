@@ -14,6 +14,15 @@ class SignInController : UIViewController {
 //        label.translatesAutoresizingMaskIntoConstraints = false
 //        return label
 //    }()
+    private let loginlbl: UILabel = {
+        let label = UILabel()
+        label.text = "Login"
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
+    }()
+    
     
     private let userNameTxtField: UITextField = {
         let textField = UITextField()
@@ -41,7 +50,7 @@ class SignInController : UIViewController {
     private let submitButton: UIButton = {
         let button = UIButton()
         button.setTitle("Login", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(submitButtonTapped), for: .touchUpInside)
@@ -58,6 +67,14 @@ class SignInController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "Image")
+        backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
+
+        // Add the UIImageView as a subview
+        self.view.insertSubview(backgroundImage, at: 0)
+        
         navigationItem.hidesBackButton = true
         
         // add UI elements to view
@@ -65,11 +82,17 @@ class SignInController : UIViewController {
         view.addSubview(passwordTxtField)
         view.addSubview(submitButton)
         view.addSubview(signIn)
+        view.addSubview(loginlbl)
         
         // set constraints
         NSLayoutConstraint.activate([
             
-            userNameTxtField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            loginlbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 60),
+            loginlbl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginlbl.widthAnchor.constraint(equalToConstant: 350),
+            loginlbl.heightAnchor.constraint(equalToConstant: 40),
+            
+            userNameTxtField.topAnchor.constraint(equalTo: loginlbl.bottomAnchor , constant: 40),
             userNameTxtField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userNameTxtField.widthAnchor.constraint(equalToConstant: 350),
             userNameTxtField.heightAnchor.constraint(equalToConstant: 40),
@@ -79,7 +102,7 @@ class SignInController : UIViewController {
             passwordTxtField.widthAnchor.constraint(equalToConstant: 350),
             passwordTxtField.heightAnchor.constraint(equalToConstant: 40),
             
-            submitButton.topAnchor.constraint(equalTo: passwordTxtField.bottomAnchor, constant: 20),
+            submitButton.topAnchor.constraint(equalTo: passwordTxtField.bottomAnchor, constant: 40),
             submitButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             submitButton.widthAnchor.constraint(equalToConstant: 100),
             submitButton.heightAnchor.constraint(equalToConstant: 50),
@@ -103,7 +126,6 @@ class SignInController : UIViewController {
             return
         }
 
-//      let endpoint = URL(string: "http://localhost:8080/user/loginUser)!
         let endpoint = URL(string: "http://localhost:8080/user/loginUser")!
         
         let parameters: [String: Any] = [

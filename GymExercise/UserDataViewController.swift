@@ -84,11 +84,20 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
     private let updateButton: UIButton = {
         let button = UIButton()
         button.setTitle("Update Profile", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(updateTap), for: .touchUpInside)
         return button
+    }()
+    
+    private let mylbl: UILabel = {
+        let label = UILabel()
+        label.text = "Update Your Profile"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        return label
     }()
     
     let userData: UserData
@@ -104,7 +113,9 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
+        view.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1)
+       
         
         heightTextField.delegate = self
         weightTextField.delegate = self
@@ -119,6 +130,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         view.addSubview(ageTextField)
         view.addSubview(fitnessGoalTextField)
         view.addSubview(updateButton)
+        view.addSubview(mylbl)
         setConstraints()
         fetchUserData()
     }
@@ -126,35 +138,38 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
     func setConstraints() {
         NSLayoutConstraint.activate([
             
-            nameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            mylbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            mylbl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            
+            nameTextField.topAnchor.constraint(equalTo: mylbl.bottomAnchor, constant: 50),
             nameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            fullNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 20),
+            fullNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 30),
             fullNameTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             fullNameTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            emailTextField.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor, constant: 20),
+            emailTextField.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor, constant: 30),
             emailTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             emailTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            heightTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 20),
+            heightTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 30),
             heightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             heightTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            weightTextField.topAnchor.constraint(equalTo: heightTextField.bottomAnchor, constant: 20),
+            weightTextField.topAnchor.constraint(equalTo: heightTextField.bottomAnchor, constant: 30),
             weightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             weightTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            ageTextField.topAnchor.constraint(equalTo: weightTextField.bottomAnchor, constant: 20),
+            ageTextField.topAnchor.constraint(equalTo: weightTextField.bottomAnchor, constant: 30),
             ageTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             ageTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            fitnessGoalTextField.topAnchor.constraint(equalTo: ageTextField.bottomAnchor, constant: 20),
+            fitnessGoalTextField.topAnchor.constraint(equalTo: ageTextField.bottomAnchor, constant: 30),
             fitnessGoalTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             fitnessGoalTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            updateButton.topAnchor.constraint(equalTo: fitnessGoalTextField.bottomAnchor, constant: 20),
+            updateButton.topAnchor.constraint(equalTo: fitnessGoalTextField.bottomAnchor, constant: 40),
             updateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             updateButton.widthAnchor.constraint(equalToConstant: 200),
             updateButton.heightAnchor.constraint(equalToConstant: 50),
@@ -261,16 +276,7 @@ class UserDataViewController: UIViewController, UITextFieldDelegate {
         }
         
         let session = URLSession.shared
-//        let task = session.dataTask(with: endpoint) { (data, response, error) in
-//            print(String(data: data ?? <#default value#>, encoding: .utf8))
-//            if let error = error {
-//                print("Error: \(error)")
-//            } else if let data = data {
-//                DispatchQueue.main.async {
-//                    self.updateTextBoxes(data: data)
-//                }
-//            }
-//        }
+        
         // Send the request
         let task = session.dataTask(with: request) { data, response, error in
             // Handle the response

@@ -13,7 +13,7 @@ class CalculateBMIVewController : UIViewController {
         let label = UILabel()
         label.text = "Calculate Your BMI"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
         label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
     }()
@@ -34,11 +34,20 @@ class CalculateBMIVewController : UIViewController {
         return textField
     }()
     
-    let calculateButton: UIButton = {
+//    let calculateButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("Calculate BMI", for: .normal)
+//        button.backgroundColor = .UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+    private let calculateButton: UIButton = {
         let button = UIButton()
         button.setTitle("Calculate BMI", for: .normal)
-        button.backgroundColor = .blue
+        button.backgroundColor = UIColor(red: 10/255, green: 207/255, blue: 131/255, alpha: 1)
+        button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
+        //button.addTarget(self, action: #selector(updateTap), for: .touchUpInside)
         return button
     }()
     
@@ -74,9 +83,10 @@ class CalculateBMIVewController : UIViewController {
         print("Passed Profile userData: \(userData)")
         
         super.viewDidLoad()
-        view.backgroundColor = .darkGray
+        
+        view.backgroundColor = UIColor(red: 238/255, green: 238/255, blue: 238/255, alpha: 1)
+        
         view.addSubview(titlelbl)
-        view.backgroundColor = .white
         view.addSubview(weightTextField)
         view.addSubview(heightTextField)
         view.addSubview(calculateButton)
@@ -92,11 +102,11 @@ class CalculateBMIVewController : UIViewController {
         
         NSLayoutConstraint.activate([
             
-            titlelbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 1),
+            titlelbl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 10),
             titlelbl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             weightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            weightTextField.topAnchor.constraint(equalTo: titlelbl.bottomAnchor, constant: 50),
+            weightTextField.topAnchor.constraint(equalTo: titlelbl.bottomAnchor, constant: 60),
             weightTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
             heightTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -104,10 +114,12 @@ class CalculateBMIVewController : UIViewController {
             heightTextField.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
             calculateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            calculateButton.topAnchor.constraint(equalTo: heightTextField.bottomAnchor, constant: 20),
+            calculateButton.topAnchor.constraint(equalTo: heightTextField.bottomAnchor, constant: 60),
+            calculateButton.widthAnchor.constraint(equalToConstant: 360),
+            calculateButton.heightAnchor.constraint(equalToConstant: 40),
             
             resultLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            resultLabel.topAnchor.constraint(equalTo: calculateButton.bottomAnchor, constant: 20),
+            resultLabel.topAnchor.constraint(equalTo: calculateButton.bottomAnchor, constant: 50),
             resultLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
         ])
@@ -185,7 +197,7 @@ class CalculateBMIVewController : UIViewController {
                 if response.statusCode == 200 {
                     print("Request succeeded")
                     DispatchQueue.main.async {
-                        let nextVC = FavoritesViewController()
+                        let nextVC = HomeTabBarController(userData: self.userData)
                         self.navigationController?.pushViewController(nextVC, animated: true)
                     }
                 } else {
